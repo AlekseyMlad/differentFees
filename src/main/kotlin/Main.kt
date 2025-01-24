@@ -9,9 +9,9 @@ fun main() {
     val transfer2 = 60_000
     val transfer3 = 110_000
 
-    println("Перевод с карты $card1 сумма $transfer1 ${transferMoney(card1, 0, transfer1)} руб.")
-    println("Перевод с карты $card2 сумма $transfer2 ${transferMoney(card2, 0, transfer2)} руб.")
-    println("Перевод с карты $card2 сумма $transfer3 ${transferMoney(card3, 410_000, transfer3)} руб.")
+    println("Перевод с карты $card1 сумма $transfer1 ${transferMoney(card1, 75_000, transfer1)} руб.")
+    println("Перевод с карты $card2 сумма $transfer2 ${transferMoney(card2, 80_000, transfer2)} руб.")
+    println("Перевод с карты $card3 сумма $transfer3 ${transferMoney(card3, 410_000, transfer3)} руб.")
 
 }
 
@@ -30,7 +30,8 @@ fun transferMoney(cardType: String = "MIR", transferMonth: Int = 0, summTransfer
 
         "MASTERCARD" -> {
             val freeLimit = 75_000
-            val taxableAmount = maxOf(0, transferMonth + summTransfer - freeLimit)
+            val taxableAmount = if (transferMonth > freeLimit){ summTransfer }
+                else maxOf(0, transferMonth + summTransfer - freeLimit)
             if (taxableAmount > 0) (taxableAmount * 0.006).toInt() + 20 else 0
         }
 
